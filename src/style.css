@@ -1,0 +1,13 @@
+h1, p {
+  font-family: Lato;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-field {
+  
+}
