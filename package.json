@@ -3,17 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@appscience/simple-table": "^6.0.2",
-    "@appscience/utils": "^6.0.2",
-    "@heroicons/react": "^1.0.6",
+    "@emotion/react": "^11.10.4",
+    "@heroicons/react": "^2.0.0",
+    "@mantine/core": "^5.5.4",
+    "@mantine/hooks": "^5.5.4",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.2",
     "@types/react-modal": "^3.13.1",
-    "date-fns": "^2.28.0",
     "postcss": "^8.0.9",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-modal": "^3.15.1",
     "tailwindcss": "^3.0.2"
   },
   "scripts": {
@@ -24,5 +23,17 @@
   },
   "devDependencies": {
     "react-scripts": "latest"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

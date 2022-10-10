@@ -1,41 +1,30 @@
-import { CheckCircleIcon, TrashIcon, XCircleIcon } from '@heroicons/react/outline';
-import * as React from 'react';
-import { useState } from 'react';
-import ReactModal from 'react-modal'
-import { joinStrings } from '../utils';
+import {CheckCircleIcon, TrashIcon, XCircleIcon} from '@heroicons/react/24/outline'
+import {Modal, TextInput, ActionIcon, Button} from '@mantine/core'
+import * as React from 'react'
+import {useState} from 'react'
+import {joinStrings} from '../utils'
 
-//- Реализовать контролируемые инпуты с возможность ввода значений > 0
+//- Реализовать контролируемые инпуты с возможностью ввода значений > 0
 //- Добавить удаление строк
 //- Реализовать валидацию
 //- Добавить автофокус при добавлении новой строки
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
 
 interface Line {
   id: number,
   quantity: number|null,
 }
 
-interface SplitQuantityPopupProps {
-  show: boolean,
+export interface SplitQuantityPopupProps {
+  opened: boolean,
   total: number,
-  onCancel: () => void,
-  onSuccess: (parts: Array<number>) => Promise<void>,
+  onClose: () => void,
+  onSuccess: (parts: Array<number|null>) => Promise<void>,
 }
 
 export function SplitQuantityPopup({
-  show,
+  opened,
   total,
-  onCancel,
+  onClose,
   onSuccess,
 }: SplitQuantityPopupProps) {
   const [lines, setLines] = useState<Array<Line>>([
@@ -46,44 +35,44 @@ export function SplitQuantityPopup({
   const canSave = true
 
   return (
-    <ReactModal isOpen={show} style={customStyles}>
+    <Modal opened={opened} onClose={onClose} title="Split quantity" size='xs'>
       <div className='flex items-center justify-center mb-1 pr-2 text-md font-medium flex-wrap'>
         {canSave ? <CheckCircleIcon className='h-6' color='green' /> : <XCircleIcon className='h-6' color='red' />}
         <span className='ml-1.5'>
-          {`Распределено: ${0} из ${total}`}
+          {`Distributed: ${0} of ${total}`}
         </span>
       </div>
       <div className='max-h-[320px] space-y-2 py-2.5 overflow-y-auto'>
-        {lines.map((line, index) => <LineField
+        {lines.map((line, index) => <BoxField
           index={index}
           onRemove={() => {}}
         />)}
-        <LineField
+        <BoxField
           index={lines.length}
           onRemove={() => {}}
           onAddLine={onAddLine}
         />
       </div>
       <div className='flex space-x-2 justify-end mt-4'>
-        <button onClick={onCancel}>Close</button>
-        <button onClick={() => onSuccess(lines.map(x => x.quantity))}>Save</button>
+        <Button onClick={onClose} variant='outline'>Close</Button>
+        <Button onClick={() => onSuccess(lines.map(x => x.quantity))}>Save</Button>
       </div>
-    </ReactModal>
+    </Modal>
   )
 }
 
 
-interface LineFieldProps {
+interface BoxFieldProps {
   index: number,
   onRemove?: () => void,
   onAddLine?: () => void,
 }
 
-export const LineField = ({
+export const BoxField = ({
   index,
   onRemove,
   onAddLine,
-}: LineFieldProps) => {
+}: BoxFieldProps) => {
   const isNewInput = !!onAddLine
 
   return (
@@ -92,19 +81,20 @@ export const LineField = ({
       isNewInput && 'opacity-50',
     )}>
       <label className='mr-auto'>
-        {`Line ${index + 1}`}
+        {`Box ${index + 1}`}
       </label>
-      <input
+      <TextInput
         type='number'
         required
         className='ml-2 mr-1 w-[100px]'
       />
-      <button
+      <ActionIcon
         onClick={onRemove}
         disabled={isNewInput || !onRemove}
+        className='bg-transparent text-red-500 hover:bg-transparent disabled:bg-transparent border-0 disabled:text-gray-500'
       >
         <TrashIcon className='w-5 h-5' />
-      </button>
+      </ActionIcon>
     </div>
   )
 }
