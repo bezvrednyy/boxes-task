@@ -1,12 +1,11 @@
 import {CheckCircleIcon, TrashIcon, XCircleIcon} from '@heroicons/react/24/outline'
-import {Modal, TextInput, ActionIcon, Button} from '@mantine/core'
+import {Modal, TextInput, ActionIcon, Button, NumberInput} from '@mantine/core'
 import * as React from 'react'
 import {useState} from 'react'
 import {joinStrings} from '../utils'
 
 //- Реализовать контролируемые инпуты с возможностью ввода значений > 0
-//- Добавить удаление строк
-//- Реализовать валидацию
+//- Добавить удаления и добавления строк
 //- Добавить автофокус при добавлении новой строки
 
 interface Line {
@@ -83,9 +82,9 @@ export const BoxField = ({
       <label className='mr-auto'>
         {`Box ${index + 1}`}
       </label>
-      <TextInput
-        type='number'
+      <NumberInput
         required
+        hideControls
         className='ml-2 mr-1 w-[100px]'
       />
       <ActionIcon
